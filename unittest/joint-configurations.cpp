@@ -81,6 +81,26 @@ BOOST_AUTO_TEST_CASE ( integration_test )
   BOOST_CHECK_MESSAGE(results[0].isApprox(qs[0], 1e-12), "integration of full body with zero velocity - wrong results");
 }
 
+BOOST_AUTO_TEST_CASE ( integration_inplace_test )
+{
+  Model model; buildModel(model);
+
+  Eigen::VectorXd q(randomConfiguration(model, -1 * Eigen::VectorXd::Ones(model.nq), Eigen::VectorXd::Ones(model.nq) ));
+  Eigen::VectorXd v = Eigen::VectorXd::Random(model.nv);
+
+  std::cout << q.transpose() << std::endl;
+
+  Eigen::VectorXd q2 = integrate(model,q,v);
+
+  std::cout << q2.transpose() << std::endl;
+
+  integrate(model,q,v,q);
+
+  std::cout << q.transpose() << std::endl;
+
+  BOOST_CHECK_MESSAGE(q2.isApprox(q, 1e-12), "integration in place - wrong results");
+}
+
 BOOST_AUTO_TEST_CASE ( interpolate_test )
 {
   Model model; buildModel(model);
