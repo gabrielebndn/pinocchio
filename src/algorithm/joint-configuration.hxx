@@ -317,6 +317,14 @@ namespace pinocchio
     return true;
   }
 
+  template<typename VectorType, typename LowerBoundType, typename UpperBoundType, typename Scalar=typename VectorType::Scalar>
+  inline bool isWithinBounds(const Eigen::MatrixBase<VectorType> & vec,
+                             const Eigen::MatrixBase<LowerBoundType> & lowerBound,
+                             const Eigen::MatrixBase<UpperBoundType> & upperBound)
+  {
+    return (lowerBound.array() <= vec.array()).all() && (vec.array() <= upperBound.array()).all();
+  }
+
   template<typename LieGroup_t, typename Scalar, int Options, template<typename,int> class JointCollectionTpl, typename ConfigVectorIn1, typename ConfigVectorIn2>
   inline bool
   isSameConfiguration(const ModelTpl<Scalar,Options,JointCollectionTpl> & model,

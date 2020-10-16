@@ -645,6 +645,23 @@ namespace pinocchio
 
   /**
    *
+   * @brief         Check whether a vector is within given bounds
+   *
+   * The methods returns true if the input vector is element-by-element within the bounds (included)
+   * 
+   * @param[in]     vec         The vector to check
+   * @param[in]     lowerBound  Lower bound
+   * @param[in]     upperBound  Upper bound
+   *
+   * @return     Whether the vector is within the bounds.
+   */
+  template<typename VectorType, typename LowerBoundType, typename UpperBoundType>
+  inline bool isWithinBounds(const Eigen::MatrixBase<VectorType> & vec,
+                             const Eigen::MatrixBase<LowerBoundType> & lowerBound,
+                             const Eigen::MatrixBase<UpperBoundType> & upperBound);
+
+  /**
+   *
    * @brief         Return true if the given configurations are equivalents, within the given precision.
    * @remarks       Two configurations can be equivalent but not equally coefficient wise (e.g two quaternions with opposite coefficients give rise to the same orientation, i.e. they are equivalent.).
    *
